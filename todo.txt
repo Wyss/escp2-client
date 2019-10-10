@@ -1,5 +1,5 @@
-- droplet line black, other colors next to it. 
-- check headoffset. 
+- droplet line black, other colors next to it.
+- check headoffset.
 
 
 
@@ -23,7 +23,7 @@ Install cups development packages
 Download and extract 5.2.14, open terminal in folder (gutenprint-5.2.14)
     $ ./configure
 
-Check "Build CUPS: yes", make sure that the summary says: 
+Check "Build CUPS: yes", make sure that the summary says:
     ================================================================
     Features:
         Build CUPS:                                 yes, installing in /usr

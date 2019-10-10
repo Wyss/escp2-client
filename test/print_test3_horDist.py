@@ -9,14 +9,16 @@ import numpy as np
 
 # SPECIFY FILENAME, PRINTERNAME AND OUTPUTFOLDER
 filename = 'test3_p600'
-printer = 'p600'  # one of the printers for which the header and footer files are available in the 'prns' folder
+printer = 'p600'  # one of the printers for which the header and footer files
+# are available in the 'prns' folder
 outputfolder = '.'
 
 # SET PARAMETERS
 # These parameters depend on the specific printer
 # printer units can be found by parsing the prn file
 # Same with color codes, print a file with all colors and parse it
-# other specs can be found by looking in spec sheet or service manual (if available)
+# other specs can be found by looking in spec sheet or service manual (if
+# available)
 
 # Shown parameters should work with R2400 / P600 / R3000
 # unit parameters
@@ -46,7 +48,9 @@ unim = b'\x00'  # 01 uni, 00 bi
 
 
 # CREATE THE RASTERDATA
-# create a matrix 180 by 50, with all ones. When providing this to esc_i_matrix, this would result in very closely printed droplets, with a spacing of 1/360" (I think!?)
+# create a matrix 180 by 50, with all ones. When providing this to
+# esc_i_matrix, this would result in very closely printed droplets, with a
+# spacing of 1/360" (I think!?)
 num_drops_hor = 50
 mat = np.ones((nozzles, 50))
 # set the last row to 3 for large drops
@@ -59,7 +63,8 @@ print(mat)
 
 
 # Create the raster.
-# raster1: all color channels next to each other, printhead is expected to only make one passage
+# raster1: all color channels next to each other, printhead is expected to only
+# make one passage
 # print all colors while holding the printhead on the same location.
 allColors = [black, lightBlack, lightLightBlack,
              cyan, lightCyan, magenta, lightMagenta, yellow]
@@ -86,8 +91,8 @@ footer = load_prn_file('prns/' + printer + '/' + printer + '-footer.prn')
 
 # COMPOSE BODY
 body = ESC_Graph() + ESC_Units(pmgmt, vert, hor, mbase) + ESC_Kmode() + \
-    ESC_imode(n=b'\x00') + ESC_Umode(unim) + ESC_edot(d) + ESC_Dras(v=240/3, h=120/3) + \
-    ESC_C(pmgmt) + ESC_c(pmgmt) + ESC_S(pmgmt)  # + esc_m
+    ESC_imode(n=b'\x00') + ESC_Umode(unim) + ESC_edot(d) + \
+    ESC_Dras(v=240/3, h=120/3) + ESC_C(pmgmt) + ESC_c(pmgmt) + ESC_S(pmgmt)  # + esc_m
 
 # COMBINE
 total = header + body + rasterdata + footer

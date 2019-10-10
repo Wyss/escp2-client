@@ -434,6 +434,7 @@ def printLOGO(matrix, x=5.5, y=3, size=3, r=b'\x00', **kwargs):
     dx = (dy + 1) * (1 / 120)
     rasterdata = b''
     for k in range(len(matrix)):
-        rasterdata += (ESC_dollar(hor, x + k * dx) + ESC_i_nrs(matrix[k], color, size))
+        rasterdata += (ESC_dollar(hor, x + k * dx) + ESC_i_nrs(matrix[k],
+                                                               color, size))
     image = rasterdata
     return image
