@@ -6,9 +6,11 @@ See paper describing the method at DOI: [10.1039/C8RA00756J](https://pubs.rsc.or
 
 ## getting printer running from fresh Raspbian Buster Lite
 
-1.  install fresh Raspbian Buster with Desktop
-2.  get an Epson XP-440 printer
-3.  install CUPS, gutenprint, and epson drivers
+1.  Install fresh Raspbian Buster with Desktop
+2.  Get an Epson XP-440 printer
+3.  Install CUPS, gutenprint, and epson drivers
     ```shell
     sudo apt-get install cups printer-driver-gutenprint escputil
     ```
+4.  Open a browser and enter `localhost:631` to the address bar.
+5.  
