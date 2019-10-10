@@ -33,8 +33,8 @@ def split_prn(printername, filepath, outputfolder='prns'):
     load a prn file and splits it into a header, body and footer file
 
     specify printername, original prn filepath and the desired outputfolder.
-    Splits the prn file is three sections, header, body and footer, which can be loaded later on
-    to create a custom prn file.
+    Splits the prn file is three sections, header, body and footer, which can
+    be loaded later on to create a custom prn file.
     File is saved as: <outputfolder>/<printername>/<printername>-[section].prn
     """
     file = filepath
@@ -110,7 +110,8 @@ def print_hex(hbyte):
         out = binascii.b2a_hex(hbyte).decode('utf-8')
 
     def encrypt(string, length):
-        return ' '.join(string[i:i+length] for i in range(0,len(string),length))
+        return ' '.join(string[i:i+length] for i in range(0, len(string),
+                                                          length))
 
     return encrypt(out,2)
 
@@ -186,7 +187,8 @@ def createnozzlelist(nozzles, activen, spacing, firstnozzle=1):
 
 def createnozzlelistsp(nozzles, nozzlelist, firstnozzle=0):
     """
-    create a nozzlelist, takes a list of active nozzles and converts this to ones and zeros on the specified places
+    create a nozzlelist, takes a list of active nozzles and converts this to
+    ones and zeros on the specified places
     """
     list = [0] * nozzles
     for x in nozzlelist:
@@ -213,14 +215,16 @@ def rsf(num, sig_figs=5):
     Round to specified number of sigfigs
     """
     if num != 0:
-        return round(num, -int(math.floor(math.log10(abs(num))) - (sig_figs - 1)))
+        return round(num, -int(math.floor(math.log10(abs(num))) - (sig_figs -
+                                                                   1)))
     else:
         return 0  # Can't take the log of 0
 
 
 def body_viewer(data):
     """
-    view a prn file, in hexadecimal bytes. Values need to be converted to decimals for calculations.
+    view a prn file, in hexadecimal bytes. Values need to be converted to
+    decimals for calculations.
     Only view, like perl script: parse-escp2
     """
     # split data

@@ -1,6 +1,7 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                '..', '..')))
 import binascii
 import math
 from hex_functions import *
@@ -16,7 +17,8 @@ os.chdir(os.path.join(dname, '..', '..'))
 
 # SPECIFY FILENAME, PRINTERNAME AND OUTPUTFOLDER
 filename = 'test_p600_low_res'
-# one of the printers for which the header and footer files are available in the 'prns' folder
+# one of the printers for which the header and footer files are available in
+# the 'prns' folder
 printer = 'p600'
 outputfolder = 'output'
 
@@ -24,7 +26,8 @@ outputfolder = 'output'
 # These parameters depend on the specific printer
 # printer units can be found by parsing the prn file
 # Same with color codes, print a file with all colors and parse it
-# other specs can be found by looking in spec sheet or service manual (if available)
+# other specs can be found by looking in spec sheet or service manual (if
+# available)
 
 # Shown parameters should work with R2400 / P600 / R3000
 # unit parameters
@@ -65,7 +68,8 @@ y = 1       # one inch from top edge of paper
 # width of the matrix (number of droplets in printhead travel direction)
 width = 100
 matrix = np.zeros((nozzles, width))     # init the matrix as all zeros
-# set all rows of the matrix to 3's (large droplets), except for the last 2 rows
+# set all rows of the matrix to 3's (large droplets), except for the last 2
+# rows
 matrix[0:58, :] = 3
 
 # Create the raster,
@@ -73,7 +77,8 @@ matrix[0:58, :] = 3
 #   Print the matrix
 raster += ESC_dollar(hor, x) + ESC_i_matrix(black, matrix, spacing=0, fan=0)
 
-# First set the vertical position on the paper, then print the raster as composed in the previous step, add a linefeed
+# First set the vertical position on the paper, then print the raster as
+# composed in the previous step, add a linefeed
 rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
 
 
@@ -84,8 +89,8 @@ footer = load_prn_file('prns/' + printer + '/' + printer + '-footer.prn')
 
 # COMPOSE BODY
 body = ESC_Graph() + ESC_Units(pmgmt, vert, hor, mbase) + ESC_Kmode() + \
-    ESC_imode(n=b'\x00') + ESC_Umode(unim) + ESC_edot(d) + ESC_Dras(v=240 / 3, h=120 / 3) + \
-    ESC_C(pmgmt) + ESC_c(pmgmt) + ESC_S(pmgmt)  # + esc_m
+    ESC_imode(n=b'\x00') + ESC_Umode(unim) + ESC_edot(d) + \
+    ESC_Dras(v=240 / 3, h=120 / 3) + ESC_C(pmgmt) + ESC_c(pmgmt) + ESC_S(pmgmt)  # + esc_m
 
 # COMBINE
 total = header + body + rasterdata + footer
