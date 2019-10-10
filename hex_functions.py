@@ -7,7 +7,7 @@ from prettytable import PrettyTable
 
 def data_splitter(data):
     """
-    splits the binary data into a list with delimiter ESC = b'\x1b' 
+    splits the binary data into a list with delimiter ESC = b'\x1b'
     """
     data_split = re.split(b'\x1b', data)
     if data_split[0] == b'':
@@ -34,7 +34,7 @@ def split_prn(printername, filepath, outputfolder='prns'):
 
     specify printername, original prn filepath and the desired outputfolder.
     Splits the prn file is three sections, header, body and footer, which can be loaded later on
-    to create a custom prn file. 
+    to create a custom prn file.
     File is saved as: <outputfolder>/<printername>/<printername>-[section].prn
     """
     file = filepath
@@ -111,7 +111,7 @@ def print_hex(hbyte):
 
     def encrypt(string, length):
         return ' '.join(string[i:i+length] for i in range(0,len(string),length))
-    
+
     return encrypt(out,2)
 
 
