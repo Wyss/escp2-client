@@ -30,7 +30,7 @@ SMALL_FONT = ("Verdana", 8)
 
 # ==== DEFAULT SETTINGS ===
 patternSelected = 'nxm raster'
-printerSelected = 'SX235W'
+printerSelected = 'XP-440'
 curRow = 0
 
 colorNames = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
@@ -69,6 +69,19 @@ New printers can be added to this dictionary
 
 """
 printersParDict = {
+    'XP-440' : {'pmgmt' : 720,
+                'vert': 720,
+                'hor': 5760,
+                'm': 5760,
+                'nozzles' : 128,
+                'black' : b'\x60',
+                'magenta' : None,
+                'cyan' : None,
+                'yellow' : None,
+                'd' : 'VSD2',
+                'pmid' : 'Normal2',
+                'linux-name': 'printer-sx600fw',
+                'prnfiles' :'sx600fw'},
     'SX600FW' : {'pmgmt' : 720,
                 'vert': 720,
                 'hor': 5760,
