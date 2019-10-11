@@ -8,10 +8,10 @@ See paper describing the method at DOI: [10.1039/C8RA00756J](https://pubs.rsc.or
 
 1.  Install fresh Raspbian Buster with Desktop
 2.  Get an Epson XP-440 printer
-<!-- 3.  Install CUPS -->
-    <!-- ```shell -->
-    <!-- $ sudo apt-get install cups -->
-    <!-- ``` -->
+3.  Install CUPS and Epson printer drivers and Gutenprint
+    ```shell
+    $ sudo apt-get install cups driver-printer-escpr gutenprint
+    ```
 4.  Download Gutenprint 5.2.11:
     ```shell
     $ cd ~/Downloads
@@ -48,12 +48,27 @@ See paper describing the method at DOI: [10.1039/C8RA00756J](https://pubs.rsc.or
         ```
     4. Open a browser and navigate to URL [http://localhost:631](http://localhost:631)
     5. Under the *Administrators* menu, click *Add Printer*. Log in with device credentials.
-    6. Click *LPD/LPR Host or Printer* and type `file:/tmp/<arbitrary-output-filename>.prn` and continue.  
+    6. Click *LPD/LPR Host or Printer* and type `file:/tmp/arbitrary.prn` and continue.  
     7. Name the printer, select *Epson* in the *Make* menu and continue. In the *Model* menu, select the corresponding model with `CUPS+Gutenprint v5.2.11(en)` in the name.  Continue and select default options.
 7.  Make unprint executable
     ```shell
     sudo chmod +x ~/gutenprint/test/unprint
     ```
+8.  Generate simple printer output
+    1. Find a small text file to print.
+    2. In the terminal, enter
+       ```shell
+       $ lp -d <printername> <smallfile>
+       ```
+       where <printername> is the name of the printer when added to CUPS earlier, and <smallfile> is the arbitrary small text file.
+       -  This saves the output to `/tmp/arbitrary.prn` from when the printer was added to CUPS.
+    3. Move the .prn file somewhere you can edit it, in `~/prn` for example:
+       ```shell
+       $ mkdir ~/prn
+       $ cd ~/prn
+       $ sudo cp /tmp/arbitrary.prn . && sudo chmod 777 arbitrary.prn && mv arbitrary.prn <newname>.prn
+       ```
+       where <newname>.prn is a readable descriptive name, (e.g. <newname> = xp-440 for the Epson Expression XP-440 printer).
 8.  Run the program:
     - GUI
         ```shell
