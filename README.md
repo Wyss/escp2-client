@@ -23,7 +23,7 @@ See paper describing the method at DOI: [10.1039/C8RA00756J](https://pubs.rsc.or
     $ mv gutenprint-5.2.11/ ~/gutenprint
     $ cd ~/gutenprint/
     $ ./configure
-    $ make
+    $ sudo make
     $ sudo make install
     ```
 6.  Install ESC/P2 Client
@@ -33,7 +33,28 @@ See paper describing the method at DOI: [10.1039/C8RA00756J](https://pubs.rsc.or
         ```shell
         $ pip3 install -r requirements.txt
         ```
-7.  Run the program:
+7.  Add printer to CUPS:
+    1. Open the cups files config
+        ```shell
+        sudo nano /etc/cups/cups-files.conf
+        ```
+    2. At the end of the file, add the case-sensitive line:
+        ```shell
+        FileDevice Yes
+        ```
+    3. Restart CUPS:
+        ```shell
+        sudo /etc/init.d/cups restart
+        ```
+    4. Open a browser and navigate to URL [http://localhost:631](http://localhost:631)
+    5. Under the *Administrators* menu, click *Add Printer*. Log in with device credentials.
+    6. Click *LPD/LPR Host or Printer* and type `file:/tmp/<arbitrary-output-filename>.prn` and continue.  
+    7. Name the printer, select *Epson* in the *Make* menu and continue. In the *Model* menu, select the corresponding model with `CUPS+Gutenprint v5.2.11(en)` in the name.  Continue and select default options.
+7.  Make unprint executable
+    ```shell
+    sudo chmod +x ~/gutenprint/test/unprint
+    ```
+8.  Run the program:
     - GUI
         ```shell
         python3 main_gui.py
