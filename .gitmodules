@@ -1,0 +1,3 @@
+[submodule "gimp_print"]
+	path = gimp_print
+	url = git@github.com:aosm/gimp_print.git
