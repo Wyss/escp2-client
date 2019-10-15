@@ -30,7 +30,7 @@ SMALL_FONT = ("Verdana", 8)
 
 # ==== DEFAULT SETTINGS ===
 patternSelected = 'nxm raster'
-printerSelected = 'XP-440'
+printerSelected = 'XP440'
 curRow = 0
 
 colorNames = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
@@ -69,11 +69,11 @@ New printers can be added to this dictionary
 
 """
 printersParDict = {
-    'XP-440' : {'pmgmt' : 1440,
+    'XP440' : {'pmgmt' : 1440,
                 'vert': 1440,
                 'hor': 5760,
                 'm': 5760,
-                'nozzles' : 128,
+                'nozzles' : 59,  # CMY: 59/color, K: 180
                 'black' : b'\x60',
                 'magenta' : b'\x01',
                 'cyan' : b'\x02',
