@@ -5,6 +5,8 @@ output/
 # no prn files, except when in prns folder
 *.prn
 !prns/**/*.prn
+# no .swp (temp?) files
+*.swp
 
 
 # Byte-compiled / optimized / DLL files
