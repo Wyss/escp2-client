@@ -1279,9 +1279,12 @@ def parse_escp2(event=None):
         else:
             popt=""
 
-        os.system("perl {}/gutenprint/parse-escp2 {}{} > {}/output/parse.txt"
-                  "".format(current_dir, popt, path, current_dir))
-        os.system("xdg-open {}/output/parse.txt".format(current_dir))
+        cmd_1 = "perl ~/gutenprint/test/parse-escp2 {} {} > {}/parse.txt".format(popt, path, current_dir)
+        cmd_2 = "xdg-open {}/output/parse.txt".format(current_dir)
+        print("parse cmd 1: {}".format(cmd_1))
+        print("parse cmd 2: {}".format(cmd_2))
+        os.system(cmd_1)
+        os.system(cmd_2)
     # print(subprocess.check_output(["perl", "~/bep/gutenprint5/test/parse-escp2", path]))
 
 
