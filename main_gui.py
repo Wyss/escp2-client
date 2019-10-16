@@ -30,7 +30,7 @@ SMALL_FONT = ("Verdana", 8)
 
 # ==== DEFAULT SETTINGS ===
 PATTERN_SELECTED = 'nxm raster'
-PRINTER_SELECTED = 'SX235W'
+PRINTER_SELECTED = 'XP440'
 CUR_ROW = 0
 
 COLOR_NAMES = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
@@ -68,6 +68,19 @@ New printers can be added to this dictionary
 
 """
 PRINTERS_PARDICT = {
+    'XP440' : {'pmgmt' : 1440,
+                'vert': 1440,
+                'hor': 5760,
+                'm': 5760,
+                'nozzles' : 59,  # CMY: 59/color, K: 180
+                'black' : b'\x60',
+                'magenta' : b'\x01',
+                'cyan' : b'\x02',
+                'yellow' : b'\x04',
+                'd' : 'VSD1',
+                'pmid' : 'Normal1',
+                'linux-name': 'printer-xp440',
+                'prnfiles' :'xp440'},
     'SX600FW' : {'pmgmt' : 720,
                 'vert': 720,
                 'hor': 5760,
@@ -1163,10 +1176,10 @@ def reset_vars(event=None):
     tk.messagebox.showinfo("Parameters Reset", "All parameters were Reset!")
 
 def save_temp():
-    global path
     run_program()
     path = save_dir_var.get()+'/temp.prn'
     save_prn_file(input=totaldata, filename='temp', folder=save_dir_var.get())
+    return path
 
 def save_output_file(event=None):
     run_program()
@@ -1184,7 +1197,7 @@ def print_esc_commands(event=None, PLNAME='def'):
                                         initialvalue=lpname_var.get())
         lpname_var.set(plname)
     # linux_command = "lp -d "+PRINTERS_PARDICT[PRINTER_SELECTED]['linux-name']+" -oraw "+path
-    save_temp()
+    path = save_temp()
     try:
         subprocess.call(["lp", "-d", plname, "-oraw", path])
     except:
@@ -1200,7 +1213,7 @@ def cancel_print_jobs(event=None):
 #     os.system("sudo /etc/init.d/cups restart")
 
 def parse_escp2(event=None):
-    save_temp()
+    path = save_temp()
     option = ParseOpt_var.get()
     if option == "ghex":
         os.system("ghex "+path)
@@ -1217,10 +1230,16 @@ def parse_escp2(event=None):
         os.system("perl {}/gutenprint/parse-escp2 {}{} > {}/output/parse.txt"
                   "".format(CURRENT_DIR, popt, path, CURRENT_DIR))
         os.system("xdg-open {}/output/parse.txt".format(CURRENT_DIR))
+        cmd_1 = "perl ~/gutenprint/test/parse-escp2 {} {} > {}/parse.txt".format(popt, path, CURRENT_DIR)
+        cmd_2 = "xdg-open {}/output/parse.txt".format(CURRENT_DIR)
+        print("parse cmd 1: {}".format(cmd_1))
+        print("parse cmd 2: {}".format(cmd_2))
+        os.system(cmd_1)
+        os.system(cmd_2)
     # print(subprocess.check_output(["perl", "~/bep/gutenprint5/test/parse-escp2", path]))
 
 def unprint_escp2(event=None):
-    save_temp()
+    path = save_temp()
     os.system("~/gutenprint/test/unprint {} {}/output/temp.pnm"
               "".format(path, CURRENT_DIR))
     os.system("xdg-open {}/output/temp.pnm".format(CURRENT_DIR))
