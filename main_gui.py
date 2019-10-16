@@ -29,19 +29,18 @@ NORM_FONT = ("Verdana", 10)
 SMALL_FONT = ("Verdana", 8)
 
 # ==== DEFAULT SETTINGS ===
-patternSelected = 'nxm raster'
-printerSelected = 'XP440'
-curRow = 0
+PATTERN_SELECTED = 'nxm raster'
+PRINTER_SELECTED = 'XP440'
+CUR_ROW = 0
 
-colorNames = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
-modUnits = [5760, 2880, 1440, 720, 360, 180, 120, 90]
-
+COLOR_NAMES = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
+MOD_UNITS = [5760, 2880, 1440, 720, 360, 180, 120, 90]
 
 
 # ==== DICTIONARIES ====
 
 # PRINT METHODS IDs
-pmidOpt = {
+PMID_OPT = {
     'None' : b'',
     'Normal2' : b'\x21',
     'Normal1' : b'\x20',
@@ -49,7 +48,7 @@ pmidOpt = {
 }
 
 # DOT QUALITY OPTIONS
-dotOpt = {
+DOT_OPT = {
     'Economy' : b'\x10',
     'VSD1' : b'\x11',
     'VSD2' : b'\x12',
@@ -68,7 +67,7 @@ New printers can be added to this dictionary
   or by generating some output and parsing it with the escp2-parse Perl script
 
 """
-printersParDict = {
+PRINTERS_PARDICT = {
     'XP440' : {'pmgmt' : 1440,
                 'vert': 1440,
                 'hor': 5760,
@@ -183,20 +182,17 @@ def p1_small(**kwargs):
         ESC_i_nrs(nozzlelist, color, 1) + b'\x0c'
     return rasterdata
 
-
 def p1_med(**kwargs):
     nozzlelist = createnozzlelist(29, 1, 0, fan)
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
         ESC_i_nrs(nozzlelist, color, 2) + b'\x0c'
     return rasterdata
 
-
 def p1_large(**kwargs):
     nozzlelist = createnozzlelist(29, 1, 0, fan)
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
         ESC_i_nrs(nozzlelist, color, 3) + b'\x0c'
     return rasterdata
-
 
 def p_all_nozzles(**kwargs):
     nozzlelist = createnozzlelist(nozzles, 5, dy, 1)
@@ -241,7 +237,6 @@ def p_all_nozzles(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + (raster1 + raster2 + raster3)*rep + b'\x0c'
     return rasterdata
 
-
 def p1_10_drops(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
     raster = b''
@@ -276,7 +271,6 @@ def p1_10_drops(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_raster_nxm(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
     raster = b''
@@ -286,7 +280,6 @@ def p_raster_nxm(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_logo_pme_small(**kwargs):
     dy = 0
     dx = (dy + 1) * (1 / 120)
@@ -295,7 +288,6 @@ def p_logo_pme_small(**kwargs):
                                     createEs(x + 8 * dx, size=size, pmgmt=pmgmt, hor=hor, vert=vert, r=color))*rep + b'\x0c'
     return rasterdata
 
-
 def p_logo_pme(**kwargs):
     dy = 0
     dx = (dy + 1) * (1 / 120)
@@ -303,7 +295,6 @@ def p_logo_pme(**kwargs):
                                     createM(x + 6 * dx, size=size, fn=fan, pmgmt=pmgmt, hor=hor, vert=vert, r=color) +
                                     createE(x + 12 * dx, size=size, fn=fan, pmgmt=pmgmt, hor=hor, vert=vert, r=color))*rep + b'\x0c'
     return rasterdata
-
 
 def p_logo_pme_mne(**kwargs):
     dy = 0
@@ -319,18 +310,15 @@ def p_logo_pme_mne(**kwargs):
 
     return rasterdata
 
-
 def p_logo_TUPME(**kwargs):
     rasterdata = printTUPME(x, y, size, color, rep, pmgmt=pmgmt, hor=hor,
                             vert=vert)
     return rasterdata
 
-
 def p_logo_TUDelft(**kwargs):
     matrix = loadlogo(2)
     rasterdata = ESC_v(pmgmt, y) + (printLOGO(matrix, x, y, size, color, pmgmt=pmgmt, hor=hor, vert=vert)) * rep + b'\x0c'
     return rasterdata
-
 
 def p_nxm_sml(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
@@ -346,7 +334,6 @@ def p_nxm_sml(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster1 + raster2 + raster3 + b'\x0c'
     return rasterdata
 
-
 def p_raster_90x90(**kwargs):
     nozzlelist = createnozzlelist(nozzles, 30, 0, 0)
     # dx = um_in(200)
@@ -360,7 +347,6 @@ def p_raster_90x90(**kwargs):
         raster3 += (ESC_dollar(hor, x + dx * k) + ESC_i_nrs(nozzlelist, black3, size)) * rep
     rasterdata = ESC_v(pmgmt, y) + raster1 + raster2 + raster3 + b'\x0c'
     return rasterdata
-
 
 def p_1_100_drops(**kwargs):
     nozzlelist = createnozzlelist(nozzles, n, dy, fan)
@@ -390,7 +376,6 @@ def p_1_100_drops(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_logo_TU_fast(**kwargs):
     # stretch = int(input('horizontal stretch between dots (def=3): '))
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
@@ -399,7 +384,6 @@ def p_logo_TU_fast(**kwargs):
     return rasterdata
 
 # =======================
-
 
 # ==============================================
 # ==============================================
@@ -413,7 +397,7 @@ def nothing(event=None):
     pass
 
 # ---- Initialisation of Contstants
-patterns={}
+PATTERNS={}
 """
 New patterns can be added in the patterns_gui.py file
 Next they can be added in the patters dictionary below,
@@ -421,8 +405,8 @@ Next they can be added in the patters dictionary below,
 """
 
 def load_patterns(event=None):
-    global patterns
-    patterns = {
+    global PATTERNS
+    PATTERNS = {
         'nxm raster' : {'posx':     [True, 14],
                     'posy':         [True,5],
                     'dx':           [True, 250],
@@ -596,31 +580,28 @@ def load_patterns(event=None):
         #             'command' :     [p_raster_nxm, 0]},
     }
 
+
 load_patterns()
 
 
+PMID_NAMES = ()
+for x in PMID_OPT:
+    PMID_NAMES += (x,)
 
-
-
-pmidNames = ()
-for x in pmidOpt:
-    pmidNames += (x,)
-
-
-dotNames = ()
-for x in dotOpt:
-    dotNames += (x,)
-dotNames = tuple(sorted(dotNames))
+DOT_NAMES = ()
+for x in DOT_OPT:
+    DOT_NAMES += (x,)
+DOT_NAMES = tuple(sorted(DOT_NAMES))
 
 
 def nR():
-    global curRow
-    curRow += 1
-    return curRow
+    global CUR_ROW
+    CUR_ROW += 1
+    return CUR_ROW
 
 def sR():
-    global curRow
-    return curRow
+    global CUR_ROW
+    return CUR_ROW
 
 def nsy(event=None):
     print('not supported yet')
@@ -733,7 +714,6 @@ def setvar_printer_dict(originaldict):
             print('  NOT SUPPORTED YET ;( (maybe wrong dict1 type...)')
     return dict1
 
-
 def slugify(file_name):
     file_name = file_name.replace(' ', '_')
     print(file_name)
@@ -748,8 +728,6 @@ root = tk.Tk()
 # ICON AND TITLE
 tk.Tk.wm_title(root, "ESC/P2 Control Client")
 
-
-
 # =============================
 # STYLE
 # =============================
@@ -757,7 +735,6 @@ s = ttk.Style()
 s.configure('Blue.TLabelframe.Label', font=('Verdana', 14))
 s.configure('Blue.TLabelframe.Label', foreground='royal blue')
 s.theme_use('clam')
-
 
 # =============================
 # FRAMES IN MAIN FRAME (NOTEBOOK)
@@ -773,11 +750,10 @@ main_frame.pack(side="top", fill="both", expand=True)
 main_frame.grid_rowconfigure(0, weight=1)
 main_frame.grid_columnconfigure(0, weight=1)
 
-
 # =============================
 # FRAMES IN PRINT MENU
 # =============================
-frame_patterns = ttk.Labelframe(print_frame, padding=6, text="Patterns",
+frame_patterns = ttk.Labelframe(print_frame, padding=6, text="PATTERNS",
                                 style="Blue.TLabelframe")
 frame_printers = ttk.Labelframe(print_frame, padding=6, text="Printers",
                                 style="Blue.TLabelframe")
@@ -800,14 +776,12 @@ frame_controls.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10,
 # size frames
 print_frame.grid_columnconfigure(1, minsize=1000)
 
-
 # =============================
 # FRAME IN SETUP
 # =============================
 setup_main = ttk.Frame(setup_frame)
 setup_main.pack()
 ttk.Label(setup_main, text="EMPTY", font=LARGE_FONT).pack()
-
 
 # =============================
 # MENUBAR
@@ -846,72 +820,66 @@ helpMenu.add_command(label="Open manual (pdf)",
                      command=lambda: open_help_pdf())
 menubar.add_cascade(label="Help", menu=helpMenu)
 
-
 # =============================
 # SET PATTERN PRESETS
 # =============================
 
 dy_var = tk.StringVar()
 def updateDyVar(event=None):
-    dy_num = (patternDict['dy'][1].get()+1)*211.6666666666667
+    dy_num = (PATTERN_DICT['dy'][1].get()+1)*211.6666666666667
     dy_var.set('= '+str("%.2f" % round(dy_num,2))+u' \u03bcm')
-
 
 # =============================
 # PATTERN SELECT LISTBOX
 # =============================
-patternList = ()
-for x in patterns:
-    patternList += (x,)
+PATTERN_LIST = ()
+for x in PATTERNS:
+    PATTERN_LIST += (x,)
 
-patNames = tk.StringVar(value=tuple(patternList))
+patNames = tk.StringVar(value=tuple(PATTERN_LIST))
 patList = tk.Listbox(frame_patterns, listvariable=patNames, height=16,
                      width=30, selectmode='single', exportselection=False)
 patList.grid()
 
 def get_pattern_name(event):
-    global patternSelected
-    global patternDict
+    global PATTERN_SELECTED
+    global PATTERN_DICT
     index = patList.curselection()[0]
-    patternSelected = patternList[index]
-    patternDict = setvar_dict(patterns[patternSelected])#(patternParDict[preset])
-    print(patternSelected)
+    PATTERN_SELECTED = PATTERN_LIST[index]
+    PATTERN_DICT = setvar_dict(PATTERNS[PATTERN_SELECTED])#(patternParDict[preset])
+    print(PATTERN_SELECTED)
     updatePatternParameters()
     updatePrinterParameters()
 
 patList.bind("<ButtonRelease-1>", get_pattern_name)
 
-
-
-
 # =============================
 # PRINTER SELECT LISTBOX
 # =============================
-printerNames = ()
-for x in printersParDict:
-    printerNames += (x,)
-printerNames = tuple(sorted(printerNames))
-print(printerNames)
-prinNames = tk.StringVar(value=printerNames)
+PRINTER_NAMES = ()
+for x in PRINTERS_PARDICT:
+    PRINTER_NAMES += (x,)
+PRINTER_NAMES = tuple(sorted(PRINTER_NAMES))
+print(PRINTER_NAMES)
+prinNames = tk.StringVar(value=PRINTER_NAMES)
 
 prinList = tk.Listbox(frame_printers, listvariable=prinNames, height=12,
                       width=30, selectmode='single', exportselection=False)
 prinList.grid()
 
-# select_printer(printerSelected)
+# select_printer(PRINTER_SELECTED)
 
 def get_printer_name(event):
-    global printerSelected
-    global printerDict
+    global PRINTER_SELECTED
+    global PRINTER_DICT
     index = prinList.curselection()[0]
-    printerSelected = printerNames[index]
-    printerDict = setvar_printer_dict(printersParDict[printerSelected])
-    print(printerSelected)
+    PRINTER_SELECTED = PRINTER_NAMES[index]
+    PRINTER_DICT = setvar_printer_dict(PRINTERS_PARDICT[PRINTER_SELECTED])
+    print(PRINTER_SELECTED)
     updatePrinterParameters()
     updatePatternParameters()
 
 prinList.bind("<ButtonRelease-1>", get_printer_name)
-
 
 # BOUND ENTRY BOX TO INTEGERS
 valint = (tk.Tk.register(root, validate_int), '%d', '%i', '%P', '%s', '%S',
@@ -919,25 +887,24 @@ valint = (tk.Tk.register(root, validate_int), '%d', '%i', '%P', '%s', '%S',
 valflt = (tk.Tk.register(root, validate_float), '%d', '%i', '%P', '%s', '%S',
                                                 '%v', '%V', '%W')
 
-
 # =============================
 # SET PATTERN PARAMETERS FRAME
 # =============================
-patternDict = setvar_dict(patterns[patternSelected])
+PATTERN_DICT = setvar_dict(PATTERNS[PATTERN_SELECTED])
 drop_size = tk.IntVar()
 drop_size.set(1)
 filename_var = tk.StringVar()
-filename_var.set(slugify(patternSelected))
+filename_var.set(slugify(PATTERN_SELECTED))
 
 def updatePatternParameters():
     for child in frame_patterns_par.winfo_children():
         child.destroy()
-    global curRow
-    curRow = 0
+    global CUR_ROW
+    CUR_ROW = 0
 
 
-    patternDict = setvar_dict(patterns[patternSelected])
-    filename_var.set(slugify(patternSelected))
+    PATTERN_DICT = setvar_dict(PATTERNS[PATTERN_SELECTED])
+    filename_var.set(slugify(PATTERN_SELECTED))
 
     frame_patterns_par.grid_columnconfigure(0, minsize=150)
     frame_patterns_par.grid_columnconfigure(2, minsize=200)
@@ -945,28 +912,28 @@ def updatePatternParameters():
 
     ttk.Label(frame_patterns_par, text='Basic Options',
               font=('sansseriv', 12)).grid(row=nR(), column=0)
-    addEntry(frame_patterns_par, 'X position', 'cm', patternDict['posx'][1],
-             nR(), valcmd=valflt) if patterns[patternSelected]['posx'][0] \
+    addEntry(frame_patterns_par, 'X position', 'cm', PATTERN_DICT['posx'][1],
+             nR(), valcmd=valflt) if PATTERNS[PATTERN_SELECTED]['posx'][0] \
                                   else None
-    addEntry(frame_patterns_par, 'Y position', 'cm', patternDict['posy'][1],
-             nR(), valcmd=valflt) if patterns[patternSelected]['posy'][0] \
+    addEntry(frame_patterns_par, 'Y position', 'cm', PATTERN_DICT['posy'][1],
+             nR(), valcmd=valflt) if PATTERNS[PATTERN_SELECTED]['posy'][0] \
                                   else None
     addEntry(frame_patterns_par, 'Distance dx', u'\u03bcm',
-             patternDict['dx'][1], nR(), valcmd=valflt) \
-                if patterns[patternSelected]['dx'][0] else None
+             PATTERN_DICT['dx'][1], nR(), valcmd=valflt) \
+                if PATTERNS[PATTERN_SELECTED]['dx'][0] else None
 
     # addEntry(frame_patterns_par, 'Distance dy',
-    #          u'nozzle stretch (0 = 211.67 \u03bcm)', patternDict['dy'][1],
-    #          nR(), valcmd=valint) if patterns[patternSelected]['dy'][0] \
+    #          u'nozzle stretch (0 = 211.67 \u03bcm)', PATTERN_DICT['dy'][1],
+    #          nR(), valcmd=valint) if PATTERNS[PATTERN_SELECTED]['dy'][0] \
     #                               else None
-    if patterns[patternSelected]['dy'][0]:
+    if PATTERNS[PATTERN_SELECTED]['dy'][0]:
         updateDyVar()
         ttk.Label(frame_patterns_par, text='Distance dy: ').grid(row=nR(),
                                                                  column=0,
                                                                  sticky="e",
                                                                  pady=2)
         tk.Spinbox(frame_patterns_par, from_=0, to=29,
-                   textvariable=patternDict['dy'][1], width=11,
+                   textvariable=PATTERN_DICT['dy'][1], width=11,
                    command=updateDyVar, validate='key',
                    validatecommand=valint).grid(row=sR(),column=1, pady=2,
                                                 padx=5, sticky="e")
@@ -976,72 +943,70 @@ def updatePatternParameters():
                                                                 pady=2)
 
     addEntry(frame_patterns_par, 'Raster width', 'dots',
-             patternDict['widthn'][1], nR(), valcmd=valint) \
-                if patterns[patternSelected]['widthn'][0] else None
+             PATTERN_DICT['widthn'][1], nR(), valcmd=valint) \
+                if PATTERNS[PATTERN_SELECTED]['widthn'][0] else None
     addEntry(frame_patterns_par, 'Raster height', 'dots',
-             patternDict['heightm'][1], nR(), valcmd=valint) \
-                if patterns[patternSelected]['heightm'][0] else None
-    addEntry(frame_patterns_par, 'Distance between patterns', u'\u03bcm',
-             patternDict['rdx'][1], nR(), valcmd=valflt) \
-                if patterns[patternSelected]['rdx'][0] else None
+             PATTERN_DICT['heightm'][1], nR(), valcmd=valint) \
+                if PATTERNS[PATTERN_SELECTED]['heightm'][0] else None
+    addEntry(frame_patterns_par, 'Distance between PATTERNS', u'\u03bcm',
+             PATTERN_DICT['rdx'][1], nR(), valcmd=valflt) \
+                if PATTERNS[PATTERN_SELECTED]['rdx'][0] else None
 
     ttk.Label(frame_patterns_par,
               text='Droplet size: ').grid(row=nR(), column=0, sticky="se",
-              pady=(20, 2)) if patterns[patternSelected]['dropsize'][0] \
+              pady=(20, 2)) if PATTERNS[PATTERN_SELECTED]['dropsize'][0] \
                             else None
     ttk.Radiobutton(frame_patterns_par, text='Small', variable=drop_size,
                     value=1).grid(row=sR(), column=1, columnspan=2,
                     sticky='sw', padx=3) \
-                        if patterns[patternSelected]['dropsize'][0] else None
+                        if PATTERNS[PATTERN_SELECTED]['dropsize'][0] else None
     ttk.Radiobutton(frame_patterns_par, text='Medium', variable=drop_size,
                     value=2).grid(row=nR(), column=1, columnspan=2, sticky='w',
-                    padx=3) if patterns[patternSelected]['dropsize'][0] \
+                    padx=3) if PATTERNS[PATTERN_SELECTED]['dropsize'][0] \
                             else None
     ttk.Radiobutton(frame_patterns_par, text='Large', variable=drop_size,
                     value=3).grid(row=nR(), column=1, columnspan=2, sticky='w',
-                    padx=3) if patterns[patternSelected]['dropsize'][0] \
+                    padx=3) if PATTERNS[PATTERN_SELECTED]['dropsize'][0] \
                             else None
 
     # advanced options....
-    curRow=0
+    CUR_ROW=0
     frame_patterns_par.grid_columnconfigure(2, minsize=200)
     ttk.Label(frame_patterns_par, text='Advanced Options',
               font=('sansseriv', 12)).grid(row=nR(), column=3, columnspan=2,
                                            sticky="w")
     addEntry(frame_patterns_par, 'Repetitions', 'dots over each other',
-             patternDict['rep'][1], nR(), 3, valcmd=valint) \
-        if patterns[patternSelected]['rep'][0] else None
+             PATTERN_DICT['rep'][1], nR(), 3, valcmd=valint) \
+        if PATTERNS[PATTERN_SELECTED]['rep'][0] else None
     addEntry(frame_patterns_par, 'First active nozzle', 'nozzle',
-             patternDict['fan'][1], nR(), 3, valcmd=valint) \
-        if patterns[patternSelected]['fan'][0] else None
+             PATTERN_DICT['fan'][1], nR(), 3, valcmd=valint) \
+        if PATTERNS[PATTERN_SELECTED]['fan'][0] else None
     addEntry(frame_patterns_par, 'Width scaling',
              '(3 gives equal horizontal and vertical stretch)',
-             patternDict['stretch'][1], nR(), 3, valcmd=valint) \
-        if patterns[patternSelected]['stretch'][0] else None
+             PATTERN_DICT['stretch'][1], nR(), 3, valcmd=valint) \
+        if PATTERNS[PATTERN_SELECTED]['stretch'][0] else None
 
-    # if patternSelected == 'Load Bitmap':
+    # if PATTERN_SELECTED == 'Load Bitmap':
     #     ttk.Label(frame_patterns_par, text=' ').grid(row=nR())
     #     ttk.Button(frame_patterns_par, text='TestButton',
     #                command=load_bitmap1).grid(row=nR(), column=1)
 
 updatePatternParameters()
 
-
 # =============================
 # SET PRINTER PARAMETERS FRAME
 # =============================
-printerDict = setvar_printer_dict(printersParDict[printerSelected])
+PRINTER_DICT = setvar_printer_dict(PRINTERS_PARDICT[PRINTER_SELECTED])
 unibimode = tk.IntVar()
 unibimode.set(1)
 colorSelection = tk.StringVar()
 colorSelection.set('black')
 
-
 def updatePrinterParameters():
     for child in frame_printers_par.winfo_children():
         child.destroy()
-    global curRow
-    curRow = 0
+    global CUR_ROW
+    CUR_ROW = 0
 
     frame_printers_par.grid_columnconfigure(0, minsize=150)
     frame_printers_par.grid_columnconfigure(2, minsize=200)
@@ -1049,16 +1014,16 @@ def updatePrinterParameters():
 
     ttk.Label(frame_printers_par, text='Basic Options',
               font=('sansseriv', 12)).grid(row=nR(), column=0)
-    addEntry(frame_printers_par, 'Page Management', '', printerDict['pmgmt'],
+    addEntry(frame_printers_par, 'Page Management', '', PRINTER_DICT['pmgmt'],
              nR(), valcmd=valint)
-    addEntry(frame_printers_par, 'Vertical Unit', '', printerDict['vert'],
+    addEntry(frame_printers_par, 'Vertical Unit', '', PRINTER_DICT['vert'],
              nR(), valcmd=valint)
-    addEntry(frame_printers_par, 'Horizontal Unit', '', printerDict['hor'],
+    addEntry(frame_printers_par, 'Horizontal Unit', '', PRINTER_DICT['hor'],
              nR(), valcmd=valint)
-    addEntry(frame_printers_par, 'Nozzles', '', printerDict['nozzles'], nR(),
+    addEntry(frame_printers_par, 'Nozzles', '', PRINTER_DICT['nozzles'], nR(),
              valcmd=valint)
-    addOption(frame_printers_par, 'Nozzle Row', colorSelection, colorNames,
-              nR()) if patterns[patternSelected]['color'] else None
+    addOption(frame_printers_par, 'Nozzle Row', colorSelection, COLOR_NAMES,
+              nR()) if PATTERNS[PATTERN_SELECTED]['color'] else None
 
 
     ttk.Label(frame_printers_par, text='Print Direction Method ').grid(
@@ -1073,37 +1038,34 @@ def updatePrinterParameters():
                                                       padx=3)
 
     # advanced options....
-    curRow=0
+    CUR_ROW=0
     frame_printers_par.grid_columnconfigure(2, minsize=200)
     ttk.Label(frame_printers_par, text='Advanced Options',
               font=('sansseriv', 12)).grid(row=nR(), column=3, columnspan=2,
                                            sticky="w")
     # addEntry(frame_printers_par, 'First active nozzle', 'nozzle',
-    #          printerDict['pmid'], nR(), 3, valcmd=valint)
-    addOption(frame_printers_par, 'Dot quality', printerDict['d'], dotNames,
+    #          PRINTER_DICT['pmid'], nR(), 3, valcmd=valint)
+    addOption(frame_printers_par, 'Dot quality', PRINTER_DICT['d'], DOT_NAMES,
               nR(), 3)
-    addOption(frame_printers_par, 'Mod Unit', printerDict['m'], modUnits, nR(),
+    addOption(frame_printers_par, 'Mod Unit', PRINTER_DICT['m'], MOD_UNITS, nR(),
               3, valcmd=valint)
-    addOption(frame_printers_par, 'Print Method ID', printerDict['pmid'],
-              pmidNames, nR(), 3)
-
+    addOption(frame_printers_par, 'Print Method ID', PRINTER_DICT['pmid'],
+              PMID_NAMES, nR(), 3)
 
 updatePrinterParameters()
-
 
 # =============================
 # CONTROL FRAME
 # =============================
-current_dir = os.path.dirname(os.path.realpath(__file__))
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 save_dir_var = tk.StringVar()
-save_dir_var.set(current_dir+'/output')
+save_dir_var.set(CURRENT_DIR+'/output')
 lpname_var = tk.StringVar()
 lpname_var.set("Epson-Stylus-SX235")
 
-ParseOpt = [("None", "None"), ("Desc", "v"), ("Decomp", "V"), ("Hex", "ghex")]
+PARSE_OPT = [("None", "None"), ("Desc", "v"), ("Decomp", "V"), ("Hex", "ghex")]
 ParseOpt_var = tk.StringVar()
 ParseOpt_var.set("None")
-
 
 def get_values(event=None):
     global x, y, dx, dy, rdx, n, m, size, fan, rep, stretch
@@ -1111,30 +1073,30 @@ def get_values(event=None):
     global black, black2, black3, yellow, magenta, cyan, color
     global prnname, linux_name
 
-    x = patternDict['posx'][1].get()/2.54 if patternDict['posx'][0] else 5
-    y = patternDict['posy'][1].get()/2.54 if patternDict['posy'][0] else 3
-    dx = um_in(patternDict['dx'][1].get()) if patternDict['dx'][0] \
+    x = PATTERN_DICT['posx'][1].get()/2.54 if PATTERN_DICT['posx'][0] else 5
+    y = PATTERN_DICT['posy'][1].get()/2.54 if PATTERN_DICT['posy'][0] else 3
+    dx = um_in(PATTERN_DICT['dx'][1].get()) if PATTERN_DICT['dx'][0] \
             else um_in(250)
-    dy = patternDict['dy'][1].get() if patternDict['dy'][0] else 0
-    rdx = um_in(patternDict['rdx'][1].get()) if patternDict['rdx'][0] \
+    dy = PATTERN_DICT['dy'][1].get() if PATTERN_DICT['dy'][0] else 0
+    rdx = um_in(PATTERN_DICT['rdx'][1].get()) if PATTERN_DICT['rdx'][0] \
             else um_in(5000)
-    n = patternDict['widthn'][1].get() if patternDict['widthn'][0] else 1
-    m = patternDict['heightm'][1].get() if patternDict['heightm'][0] else 1
-    size = drop_size.get() if patternDict['dropsize'][0] else 1
-    fan = patternDict['fan'][1].get() if patternDict['fan'][0] else 0
-    rep = patternDict['rep'][1].get() if patternDict['rep'][0] else 1
-    stretch = patternDict['stretch'][1].get() if patternDict['stretch'][0] \
+    n = PATTERN_DICT['widthn'][1].get() if PATTERN_DICT['widthn'][0] else 1
+    m = PATTERN_DICT['heightm'][1].get() if PATTERN_DICT['heightm'][0] else 1
+    size = drop_size.get() if PATTERN_DICT['dropsize'][0] else 1
+    fan = PATTERN_DICT['fan'][1].get() if PATTERN_DICT['fan'][0] else 0
+    rep = PATTERN_DICT['rep'][1].get() if PATTERN_DICT['rep'][0] else 1
+    stretch = PATTERN_DICT['stretch'][1].get() if PATTERN_DICT['stretch'][0] \
             else 0
 
-    pmgmt = printerDict['pmgmt'].get()
-    vert = printerDict['vert'].get()
-    hor = printerDict['hor'].get()
-    mm = printerDict['m'].get()
-    nozzles = printerDict['nozzles'].get()
-    d = dotOpt[printerDict['d'].get()]
-    pmid = pmidOpt[printerDict['pmid'].get()]
-    prnname = printerDict['prnfiles'].get()
-    linux_name = printerDict['linux-name'].get()
+    pmgmt = PRINTER_DICT['pmgmt'].get()
+    vert = PRINTER_DICT['vert'].get()
+    hor = PRINTER_DICT['hor'].get()
+    mm = PRINTER_DICT['m'].get()
+    nozzles = PRINTER_DICT['nozzles'].get()
+    d = DOT_OPT[PRINTER_DICT['d'].get()]
+    pmid = PMID_OPT[PRINTER_DICT['pmid'].get()]
+    prnname = PRINTER_DICT['prnfiles'].get()
+    linux_name = PRINTER_DICT['linux-name'].get()
 
     umode = unibimode.get()
     if umode == 1:
@@ -1143,21 +1105,21 @@ def get_values(event=None):
         umode = b'\x00'
 
     try:
-        color = printerDict[colorSelection.get()]
+        color = PRINTER_DICT[colorSelection.get()]
     except:
         tk.messagebox.showerror('Color Error', "Selected color is not "
                                 "properly setup for this printer, try default "
                                 "color 'black'.")
 
     try:
-        black = printerDict['black']
-        cyan = printerDict['cyan']
-        yellow = printerDict['yellow']
-        magenta = printerDict['magenta']
+        black = PRINTER_DICT['black']
+        cyan = PRINTER_DICT['cyan']
+        yellow = PRINTER_DICT['yellow']
+        magenta = PRINTER_DICT['magenta']
 
         try:
-            black2 = printerDict['black2']
-            black3 = printerDict['black3']
+            black2 = PRINTER_DICT['black2']
+            black3 = PRINTER_DICT['black3']
         except:
             if color == 'black2' or color == 'black3':
                 tk.messagebox.showerror("Color Warning", "This printer only "
@@ -1172,7 +1134,6 @@ def get_values(event=None):
         tk.messagebox.showerror("Color Error", "Selected color is (maybe) not "
                                 "set up, try default color 'black'. ")
 
-
 def run_program(event=None):
     global rasterdata, body, header, footer, totaldata
     get_values()
@@ -1184,7 +1145,7 @@ def run_program(event=None):
            ESC_C(pmgmt) + ESC_c(pmgmt) + ESC_S(pmgmt) + ESC_m(pmid)
 
     try:
-        rasterdata = patternDict['command'][0]()#(n=n,m=m,size=size,dx=dx,dy=dy,fan=fan,rep=rep, stretch=stretch, rdx=rdx, x=x, y=y, hor=hor, vert=vert, pmgmt=pmgmt, nozzles=nozzles)
+        rasterdata = PATTERN_DICT['command'][0]()#(n=n,m=m,size=size,dx=dx,dy=dy,fan=fan,rep=rep, stretch=stretch, rdx=rdx, x=x, y=y, hor=hor, vert=vert, pmgmt=pmgmt, nozzles=nozzles)
         totaldata = header + body + rasterdata + footer
     except:
         tk.messagebox.showerror("ESC Command Error", "Command for this "
@@ -1195,9 +1156,7 @@ def run_program(event=None):
     tk.messagebox.showinfo("Data Generated", "The required ESC Commands are "
                            "generated!")
 
-
 get_values()
-
 
 def set_save_dir(event=None):
     # global save_dir
@@ -1205,18 +1164,16 @@ def set_save_dir(event=None):
     save_dir_var.set(save_dir)
     print(save_dir)
 
-
 def reset_vars(event=None):
     drop_size.set(1)
     unibimode.set(1)
     colorSelection.set('black')
-    save_dir_var.set(current_dir+'/output')
-    filename_var.set(slugify(patternSelected))
+    save_dir_var.set(CURRENT_DIR+'/output')
+    filename_var.set(slugify(PATTERN_SELECTED))
     load_patterns()
     updatePatternParameters()
     updatePrinterParameters()
     tk.messagebox.showinfo("Parameters Reset", "All parameters were Reset!")
-
 
 def save_temp():
     run_program()
@@ -1224,14 +1181,12 @@ def save_temp():
     save_prn_file(input=totaldata, filename='temp', folder=save_dir_var.get())
     return path
 
-
 def save_output_file(event=None):
     run_program()
     filename=filename_var.get()
     save_prn_file(input=totaldata ,filename=filename,
                   folder=save_dir_var.get())
     tk.messagebox.showinfo("Output Saved", "Save Successful")
-
 
 def print_esc_commands(event=None, PLNAME='def'):
     if PLNAME == 'def':
@@ -1241,7 +1196,7 @@ def print_esc_commands(event=None, PLNAME='def'):
                                         "Linux printer name:",
                                         initialvalue=lpname_var.get())
         lpname_var.set(plname)
-    # linux_command = "lp -d "+printersParDict[printerSelected]['linux-name']+" -oraw "+path
+    # linux_command = "lp -d "+PRINTERS_PARDICT[PRINTER_SELECTED]['linux-name']+" -oraw "+path
     path = save_temp()
     try:
         subprocess.call(["lp", "-d", plname, "-oraw", path])
@@ -1250,19 +1205,12 @@ def print_esc_commands(event=None, PLNAME='def'):
                                 "to a error in Linux, the printername is "
                                 "probably not setup correctly.")
 
-
 def cancel_print_jobs(event=None):
     subprocess.call(["cancel", "-a"])
     tk.messagebox.showinfo("Print Jobs Canceled", "Success")
 
 # def restart_cups(event=None):
 #     os.system("sudo /etc/init.d/cups restart")
-
-
-
-
-
-
 
 def parse_escp2(event=None):
     path = save_temp()
@@ -1279,24 +1227,23 @@ def parse_escp2(event=None):
         else:
             popt=""
 
-        cmd_1 = "perl ~/gutenprint/test/parse-escp2 {} {} > {}/parse.txt".format(popt, path, current_dir)
-        cmd_2 = "xdg-open {}/output/parse.txt".format(current_dir)
+        os.system("perl {}/gutenprint/parse-escp2 {}{} > {}/output/parse.txt"
+                  "".format(CURRENT_DIR, popt, path, CURRENT_DIR))
+        os.system("xdg-open {}/output/parse.txt".format(CURRENT_DIR))
+        cmd_1 = "perl ~/gutenprint/test/parse-escp2 {} {} > {}/parse.txt".format(popt, path, CURRENT_DIR)
+        cmd_2 = "xdg-open {}/output/parse.txt".format(CURRENT_DIR)
         print("parse cmd 1: {}".format(cmd_1))
         print("parse cmd 2: {}".format(cmd_2))
         os.system(cmd_1)
         os.system(cmd_2)
     # print(subprocess.check_output(["perl", "~/bep/gutenprint5/test/parse-escp2", path]))
 
-
-
 def unprint_escp2(event=None):
     path = save_temp()
     os.system("~/gutenprint/test/unprint {} {}/output/temp.pnm"
-              "".format(path, current_dir))
-    os.system("xdg-open {}/output/temp.pnm".format(current_dir))
+              "".format(path, CURRENT_DIR))
+    os.system("xdg-open {}/output/temp.pnm".format(CURRENT_DIR))
     # print(subprocess.check_output(["~/bep/gutenprint5/test/unprint", path]))
-
-
 
 def open_help_pdf(event=None):
     nsy()
@@ -1359,12 +1306,11 @@ LinuxPrinterNameEntry.grid(row=0, column=7)
 
 # Parse options:
 ParseFrame = ttk.Frame(frame_controls)
-for Ptext, Pmode in ParseOpt:
+for Ptext, Pmode in PARSE_OPT:
     ParseRadiobuttons = ttk.Radiobutton(ParseFrame, text=Ptext,
                                         variable=ParseOpt_var, value=Pmode)
     ParseRadiobuttons.pack(side="left")
 ParseFrame.grid(row=1, column=6, columnspan=2, sticky="w")
-
 
 
 root.resizable(0,0)
