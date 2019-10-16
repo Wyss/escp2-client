@@ -1219,10 +1219,10 @@ def reset_vars(event=None):
 
 
 def save_temp():
-    global path
     run_program()
     path = save_dir_var.get()+'/temp.prn'
     save_prn_file(input=totaldata, filename='temp', folder=save_dir_var.get())
+    return path
 
 
 def save_output_file(event=None):
@@ -1242,7 +1242,7 @@ def print_esc_commands(event=None, PLNAME='def'):
                                         initialvalue=lpname_var.get())
         lpname_var.set(plname)
     # linux_command = "lp -d "+printersParDict[printerSelected]['linux-name']+" -oraw "+path
-    save_temp()
+    path = save_temp()
     try:
         subprocess.call(["lp", "-d", plname, "-oraw", path])
     except:
@@ -1265,7 +1265,7 @@ def cancel_print_jobs(event=None):
 
 
 def parse_escp2(event=None):
-    save_temp()
+    path = save_temp()
     option = ParseOpt_var.get()
     if option == "ghex":
         os.system("ghex "+path)
@@ -1290,7 +1290,7 @@ def parse_escp2(event=None):
 
 
 def unprint_escp2(event=None):
-    save_temp()
+    path = save_temp()
     os.system("~/gutenprint/test/unprint {} {}/output/temp.pnm"
               "".format(path, current_dir))
     os.system("xdg-open {}/output/temp.pnm".format(current_dir))
