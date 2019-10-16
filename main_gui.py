@@ -1266,7 +1266,7 @@ def parse_escp2(event=None):
         else:
             popt=""
 
-        os.system("perl {}/gutenprint/parse-escp2 {}{} > {}/output/parse.txt"
+        os.system("perl {}/tools/parse-escp2 {}{} > {}/output/parse.txt"
                   "".format(current_dir, popt, path, current_dir))
         os.system("xdg-open {}/output/parse.txt".format(current_dir))
     # print(subprocess.check_output(["perl", "~/bep/gutenprint5/test/parse-escp2", path]))
@@ -1275,8 +1275,8 @@ def parse_escp2(event=None):
 
 def unprint_escp2(event=None):
     save_temp()
-    os.system("~/gutenprint/test/unprint {} {}/output/temp.pnm"
-              "".format(path, current_dir))
+    os.system("{}/tools/unprint {} {}/output/temp.pnm"
+              "".format(current_dir, path, current_dir))
     os.system("xdg-open {}/output/temp.pnm".format(current_dir))
     # print(subprocess.check_output(["~/bep/gutenprint5/test/unprint", path]))
 
