@@ -37,7 +37,6 @@ COLOR_NAMES = ['black', 'black2', 'black3', 'magenta', 'cyan', 'yellow']
 MOD_UNITS = [5760, 2880, 1440, 720, 360, 180, 120, 90]
 
 
-
 # ==== DICTIONARIES ====
 
 # PRINT METHODS IDs
@@ -170,20 +169,17 @@ def p1_small(**kwargs):
         ESC_i_nrs(nozzlelist, color, 1) + b'\x0c'
     return rasterdata
 
-
 def p1_med(**kwargs):
     nozzlelist = createnozzlelist(29, 1, 0, fan)
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
         ESC_i_nrs(nozzlelist, color, 2) + b'\x0c'
     return rasterdata
 
-
 def p1_large(**kwargs):
     nozzlelist = createnozzlelist(29, 1, 0, fan)
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
         ESC_i_nrs(nozzlelist, color, 3) + b'\x0c'
     return rasterdata
-
 
 def p_all_nozzles(**kwargs):
     nozzlelist = createnozzlelist(nozzles, 5, dy, 1)
@@ -228,7 +224,6 @@ def p_all_nozzles(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + (raster1 + raster2 + raster3)*rep + b'\x0c'
     return rasterdata
 
-
 def p1_10_drops(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
     raster = b''
@@ -263,7 +258,6 @@ def p1_10_drops(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_raster_nxm(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
     raster = b''
@@ -273,7 +267,6 @@ def p_raster_nxm(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_logo_pme_small(**kwargs):
     dy = 0
     dx = (dy + 1) * (1 / 120)
@@ -282,7 +275,6 @@ def p_logo_pme_small(**kwargs):
                                     createEs(x + 8 * dx, size=size, pmgmt=pmgmt, hor=hor, vert=vert, r=color))*rep + b'\x0c'
     return rasterdata
 
-
 def p_logo_pme(**kwargs):
     dy = 0
     dx = (dy + 1) * (1 / 120)
@@ -290,7 +282,6 @@ def p_logo_pme(**kwargs):
                                     createM(x + 6 * dx, size=size, fn=fan, pmgmt=pmgmt, hor=hor, vert=vert, r=color) +
                                     createE(x + 12 * dx, size=size, fn=fan, pmgmt=pmgmt, hor=hor, vert=vert, r=color))*rep + b'\x0c'
     return rasterdata
-
 
 def p_logo_pme_mne(**kwargs):
     dy = 0
@@ -306,18 +297,15 @@ def p_logo_pme_mne(**kwargs):
 
     return rasterdata
 
-
 def p_logo_TUPME(**kwargs):
     rasterdata = printTUPME(x, y, size, color, rep, pmgmt=pmgmt, hor=hor,
                             vert=vert)
     return rasterdata
 
-
 def p_logo_TUDelft(**kwargs):
     matrix = loadlogo(2)
     rasterdata = ESC_v(pmgmt, y) + (printLOGO(matrix, x, y, size, color, pmgmt=pmgmt, hor=hor, vert=vert)) * rep + b'\x0c'
     return rasterdata
-
 
 def p_nxm_sml(**kwargs):
     nozzlelist = createnozzlelist(nozzles, m, dy, fan)
@@ -333,7 +321,6 @@ def p_nxm_sml(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster1 + raster2 + raster3 + b'\x0c'
     return rasterdata
 
-
 def p_raster_90x90(**kwargs):
     nozzlelist = createnozzlelist(nozzles, 30, 0, 0)
     # dx = um_in(200)
@@ -347,7 +334,6 @@ def p_raster_90x90(**kwargs):
         raster3 += (ESC_dollar(hor, x + dx * k) + ESC_i_nrs(nozzlelist, black3, size)) * rep
     rasterdata = ESC_v(pmgmt, y) + raster1 + raster2 + raster3 + b'\x0c'
     return rasterdata
-
 
 def p_1_100_drops(**kwargs):
     nozzlelist = createnozzlelist(nozzles, n, dy, fan)
@@ -377,7 +363,6 @@ def p_1_100_drops(**kwargs):
     rasterdata = ESC_v(pmgmt, y) + raster + b'\x0c'
     return rasterdata
 
-
 def p_logo_TU_fast(**kwargs):
     # stretch = int(input('horizontal stretch between dots (def=3): '))
     rasterdata = ESC_v(pmgmt, y) + ESC_dollar(hor, x) + \
@@ -386,7 +371,6 @@ def p_logo_TU_fast(**kwargs):
     return rasterdata
 
 # =======================
-
 
 # ==============================================
 # ==============================================
@@ -583,16 +567,13 @@ def load_patterns(event=None):
         #             'command' :     [p_raster_nxm, 0]},
     }
 
+
 load_patterns()
-
-
-
 
 
 PMID_NAMES = ()
 for x in PMID_OPT:
     PMID_NAMES += (x,)
-
 
 DOT_NAMES = ()
 for x in DOT_OPT:
@@ -720,7 +701,6 @@ def setvar_printer_dict(originaldict):
             print('  NOT SUPPORTED YET ;( (maybe wrong dict1 type...)')
     return dict1
 
-
 def slugify(file_name):
     file_name = file_name.replace(' ', '_')
     print(file_name)
@@ -735,8 +715,6 @@ root = tk.Tk()
 # ICON AND TITLE
 tk.Tk.wm_title(root, "ESC/P2 Control Client")
 
-
-
 # =============================
 # STYLE
 # =============================
@@ -744,7 +722,6 @@ s = ttk.Style()
 s.configure('Blue.TLabelframe.Label', font=('Verdana', 14))
 s.configure('Blue.TLabelframe.Label', foreground='royal blue')
 s.theme_use('clam')
-
 
 # =============================
 # FRAMES IN MAIN FRAME (NOTEBOOK)
@@ -759,7 +736,6 @@ main_frame.add(setup_frame, text='  Settings  ')
 main_frame.pack(side="top", fill="both", expand=True)
 main_frame.grid_rowconfigure(0, weight=1)
 main_frame.grid_columnconfigure(0, weight=1)
-
 
 # =============================
 # FRAMES IN PRINT MENU
@@ -787,14 +763,12 @@ frame_controls.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10,
 # size frames
 print_frame.grid_columnconfigure(1, minsize=1000)
 
-
 # =============================
 # FRAME IN SETUP
 # =============================
 setup_main = ttk.Frame(setup_frame)
 setup_main.pack()
 ttk.Label(setup_main, text="EMPTY", font=LARGE_FONT).pack()
-
 
 # =============================
 # MENUBAR
@@ -833,7 +807,6 @@ helpMenu.add_command(label="Open manual (pdf)",
                      command=lambda: open_help_pdf())
 menubar.add_cascade(label="Help", menu=helpMenu)
 
-
 # =============================
 # SET PATTERN PRESETS
 # =============================
@@ -842,7 +815,6 @@ dy_var = tk.StringVar()
 def updateDyVar(event=None):
     dy_num = (PATTERN_DICT['dy'][1].get()+1)*211.6666666666667
     dy_var.set('= '+str("%.2f" % round(dy_num,2))+u' \u03bcm')
-
 
 # =============================
 # PATTERN SELECT LISTBOX
@@ -867,9 +839,6 @@ def get_pattern_name(event):
     updatePrinterParameters()
 
 patList.bind("<ButtonRelease-1>", get_pattern_name)
-
-
-
 
 # =============================
 # PRINTER SELECT LISTBOX
@@ -899,13 +868,11 @@ def get_printer_name(event):
 
 prinList.bind("<ButtonRelease-1>", get_printer_name)
 
-
 # BOUND ENTRY BOX TO INTEGERS
 valint = (tk.Tk.register(root, validate_int), '%d', '%i', '%P', '%s', '%S',
                                               '%v', '%V', '%W')
 valflt = (tk.Tk.register(root, validate_float), '%d', '%i', '%P', '%s', '%S',
                                                 '%v', '%V', '%W')
-
 
 # =============================
 # SET PATTERN PARAMETERS FRAME
@@ -1013,7 +980,6 @@ def updatePatternParameters():
 
 updatePatternParameters()
 
-
 # =============================
 # SET PRINTER PARAMETERS FRAME
 # =============================
@@ -1022,7 +988,6 @@ unibimode = tk.IntVar()
 unibimode.set(1)
 colorSelection = tk.StringVar()
 colorSelection.set('black')
-
 
 def updatePrinterParameters():
     for child in frame_printers_par.winfo_children():
@@ -1074,9 +1039,7 @@ def updatePrinterParameters():
     addOption(frame_printers_par, 'Print Method ID', PRINTER_DICT['pmid'],
               PMID_NAMES, nR(), 3)
 
-
 updatePrinterParameters()
-
 
 # =============================
 # CONTROL FRAME
@@ -1090,7 +1053,6 @@ lpname_var.set("Epson-Stylus-SX235")
 PARSE_OPT = [("None", "None"), ("Desc", "v"), ("Decomp", "V"), ("Hex", "ghex")]
 ParseOpt_var = tk.StringVar()
 ParseOpt_var.set("None")
-
 
 def get_values(event=None):
     global x, y, dx, dy, rdx, n, m, size, fan, rep, stretch
@@ -1159,7 +1121,6 @@ def get_values(event=None):
         tk.messagebox.showerror("Color Error", "Selected color is (maybe) not "
                                 "set up, try default color 'black'. ")
 
-
 def run_program(event=None):
     global rasterdata, body, header, footer, totaldata
     get_values()
@@ -1182,16 +1143,13 @@ def run_program(event=None):
     tk.messagebox.showinfo("Data Generated", "The required ESC Commands are "
                            "generated!")
 
-
 get_values()
-
 
 def set_save_dir(event=None):
     # global save_dir
     save_dir = filedialog.askdirectory()
     save_dir_var.set(save_dir)
     print(save_dir)
-
 
 def reset_vars(event=None):
     drop_size.set(1)
@@ -1204,13 +1162,11 @@ def reset_vars(event=None):
     updatePrinterParameters()
     tk.messagebox.showinfo("Parameters Reset", "All parameters were Reset!")
 
-
 def save_temp():
     global path
     run_program()
     path = save_dir_var.get()+'/temp.prn'
     save_prn_file(input=totaldata, filename='temp', folder=save_dir_var.get())
-
 
 def save_output_file(event=None):
     run_program()
@@ -1218,7 +1174,6 @@ def save_output_file(event=None):
     save_prn_file(input=totaldata ,filename=filename,
                   folder=save_dir_var.get())
     tk.messagebox.showinfo("Output Saved", "Save Successful")
-
 
 def print_esc_commands(event=None, PLNAME='def'):
     if PLNAME == 'def':
@@ -1237,19 +1192,12 @@ def print_esc_commands(event=None, PLNAME='def'):
                                 "to a error in Linux, the printername is "
                                 "probably not setup correctly.")
 
-
 def cancel_print_jobs(event=None):
     subprocess.call(["cancel", "-a"])
     tk.messagebox.showinfo("Print Jobs Canceled", "Success")
 
 # def restart_cups(event=None):
 #     os.system("sudo /etc/init.d/cups restart")
-
-
-
-
-
-
 
 def parse_escp2(event=None):
     save_temp()
@@ -1271,16 +1219,12 @@ def parse_escp2(event=None):
         os.system("xdg-open {}/output/parse.txt".format(CURRENT_DIR))
     # print(subprocess.check_output(["perl", "~/bep/gutenprint5/test/parse-escp2", path]))
 
-
-
 def unprint_escp2(event=None):
     save_temp()
     os.system("~/gutenprint/test/unprint {} {}/output/temp.pnm"
               "".format(path, CURRENT_DIR))
     os.system("xdg-open {}/output/temp.pnm".format(CURRENT_DIR))
     # print(subprocess.check_output(["~/bep/gutenprint5/test/unprint", path]))
-
-
 
 def open_help_pdf(event=None):
     nsy()
@@ -1348,7 +1292,6 @@ for Ptext, Pmode in PARSE_OPT:
                                         variable=ParseOpt_var, value=Pmode)
     ParseRadiobuttons.pack(side="left")
 ParseFrame.grid(row=1, column=6, columnspan=2, sticky="w")
-
 
 
 root.resizable(0,0)
